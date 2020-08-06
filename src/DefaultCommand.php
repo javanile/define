@@ -2,6 +2,8 @@
 
 namespace JavanileDefine;
 
+use Webmozart\Glob\Glob;
+use Webmozart\PathUtil\Path;
 use GuzzleHttp\Client;
 use RuntimeException;
 use Symfony\Component\Console\Command\Command;
@@ -24,9 +26,10 @@ class DefaultCommand extends Command
     protected function configure()
     {
         $this
+            ->setName('define')
             ->setDescription('Build a bundle from a Propan.json file')
-            ->addArgument('path', InputArgument::REQUIRED)
-            //->addOption('path', null, InputOption::VALUE_REQUIRED, 'Install on specific path', getcwd());
+            ->addArgument('concept', InputArgument::REQUIRED)
+            ->addOption('prefix', null, InputOption::VALUE_REQUIRED, 'Install on specific path', getcwd());
         ;
     }
 
@@ -41,6 +44,22 @@ class DefaultCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $output->writeln('<comment>Brick successful added.</comment>');
+
+        $prefix = $input->getOption('prefix');
+
+        $tokenizer = new \Nette\Tokenizer\Tokenizer([
+            'NUMBER' => '\d+',
+            'WHITESPACE' => '\s+',
+            'STRING' => '\w+',
+        ]);
+
+        $files = Glob::glob(Path::makeAbsolute('**/*.def', Path::makeAbsolute($prefix, getcwd())));
+        foreach ($files as $file) {
+            $stream = $tokenizer->tokenize(file_get_contents($file));
+            foreach ($stream as $token) {
+                var_dump($token);
+            }
+        }
 
         return 0;
     }

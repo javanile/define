@@ -8,5 +8,10 @@ if (file_exists(__DIR__.'/../../../autoload.php')) {
 }
 
 $app = new JavanileDefine\Application();
+$cmd = new JavanileDefine\DefaultCommand();
+
+$app->add($cmd);
+
+$app->setDefaultCommand($cmd->getName(), true);
 
 $app->run();
