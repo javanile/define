@@ -1,0 +1,5 @@
+%namespace JavanileDefine
+%class DefineParser
+%start stmt
+
+stmt = a | b .
