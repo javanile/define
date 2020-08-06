@@ -2,4 +2,4 @@
 %class DefineParser
 %start stmt
 
-stmt = a | b .
+stmt =  .

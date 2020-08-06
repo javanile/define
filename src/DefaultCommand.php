@@ -51,6 +51,7 @@ class DefaultCommand extends Command
             'NUMBER' => '\d+',
             'WHITESPACE' => '\s+',
             'STRING' => '\w+',
+            'COMMENT' => '\/\*(\*(?!\/)|[^*])*\*\/',
         ]);
 
         $files = Glob::glob(Path::makeAbsolute('**/*.def', Path::makeAbsolute($prefix, getcwd())));
