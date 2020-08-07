@@ -21,9 +21,9 @@ class GrammarParser extends \Genesis\Lime\LimeParser {
   public $i = array(
     array(
       'loads_stmt' => 's 1',
-      'define_stmt' => 's 22',
+      'define_stmt' => 's 27',
       'DEFINE' => 's 3',
-      'start_stmt' => 's 23',
+      'start_stmt' => 's 28',
       "'start'" => "a 'start'"
     ),
     array(
@@ -37,97 +37,142 @@ class GrammarParser extends \Genesis\Lime\LimeParser {
     ),
     array(
       'concept' => 's 4',
-      'CONCEPT' => 's 8'
+      'LITERAL' => 's 9',
+      'ROUTE' => 's 10'
     ),
     array(
       "'{'" => 's 5',
-      'WITH' => 's 15',
+      'WITH' => 's 18',
       'DEFINE' => 'r 3',
       '#' => 'r 3'
     ),
     array(
       'instruction_list' => 's 6',
-      "'instruction_list'10" => 's 12',
-      'CONCEPT' => 'r 10'
+      "'instruction_list'12" => 's 15',
+      'LITERAL' => 'r 12',
+      'ROUTE' => 'r 12'
     ),
     array(
       "'}'" => 's 7',
-      'CONCEPT' => 's 8',
-      'instruction' => 's 9',
-      'concept' => 's 11'
+      'instruction' => 's 8',
+      "'instruction'15" => 's 13',
+      'LITERAL' => 'r 15',
+      'ROUTE' => 'r 15'
     ),
     array(
       'DEFINE' => 'r 4',
       '#' => 'r 4'
     ),
     array(
-      'WITH' => 'r 9',
-      "'{'" => 'r 9',
-      'DEFINE' => 'r 9',
-      'CONCEPT' => 'r 9',
-      "'}'" => 'r 9',
-      "';'" => 'r 9',
-      '#' => 'r 9'
+      'LITERAL' => 's 9',
+      'ROUTE' => 's 10',
+      "';'" => 's 11',
+      'concept' => 's 12'
     ),
     array(
-      'CONCEPT' => 's 8',
-      'concept' => 's 10',
-      "'}'" => 'r 12'
+      'WITH' => 'r 10',
+      "'{'" => 'r 10',
+      'DEFINE' => 'r 10',
+      "','" => 'r 10',
+      "';'" => 'r 10',
+      'LITERAL' => 'r 10',
+      'ROUTE' => 'r 10',
+      '#' => 'r 10'
     ),
     array(
-      'CONCEPT' => 'r 14',
+      'WITH' => 'r 11',
+      "'{'" => 'r 11',
+      'DEFINE' => 'r 11',
+      "','" => 'r 11',
+      "';'" => 'r 11',
+      'LITERAL' => 'r 11',
+      'ROUTE' => 'r 11',
+      '#' => 'r 11'
+    ),
+    array(
       "'}'" => 'r 14',
-      "';'" => 'r 14'
+      'LITERAL' => 'r 14',
+      'ROUTE' => 'r 14'
     ),
     array(
-      'CONCEPT' => 'r 13',
-      "'}'" => 'r 13',
-      "';'" => 'r 13'
+      "';'" => 'r 17',
+      'LITERAL' => 'r 17',
+      'ROUTE' => 'r 17'
     ),
     array(
-      'CONCEPT' => 's 8',
-      'instruction' => 's 13',
-      'concept' => 's 11'
+      'LITERAL' => 's 9',
+      'ROUTE' => 's 10',
+      'concept' => 's 14'
     ),
     array(
-      'CONCEPT' => 's 8',
-      "';'" => 's 14',
-      'concept' => 's 10'
+      'LITERAL' => 'r 16',
+      'ROUTE' => 'r 16',
+      "';'" => 'r 16'
     ),
     array(
-      'CONCEPT' => 'r 11',
-      "'}'" => 'r 11'
+      'instruction' => 's 16',
+      "'instruction'15" => 's 13',
+      'LITERAL' => 'r 15',
+      'ROUTE' => 'r 15'
     ),
     array(
-      'concept_list' => 's 16',
-      "'concept_list'7" => 's 20',
-      'CONCEPT' => 'r 7'
+      'LITERAL' => 's 9',
+      'ROUTE' => 's 10',
+      "';'" => 's 17',
+      'concept' => 's 12'
     ),
     array(
-      "'{'" => 's 17',
+      'LITERAL' => 'r 13',
+      'ROUTE' => 'r 13',
+      "'}'" => 'r 13'
+    ),
+    array(
+      'concept_list' => 's 19',
+      "'concept_list'7" => 's 25',
+      'LITERAL' => 'r 7',
+      'ROUTE' => 'r 7'
+    ),
+    array(
+      "'{'" => 's 20',
+      "','" => 's 23',
       'DEFINE' => 'r 5',
       '#' => 'r 5'
     ),
     array(
-      'instruction_list' => 's 18',
-      "'instruction_list'10" => 's 12',
-      'CONCEPT' => 'r 10'
+      'instruction_list' => 's 21',
+      "'instruction_list'12" => 's 15',
+      'LITERAL' => 'r 12',
+      'ROUTE' => 'r 12'
     ),
     array(
-      "'}'" => 's 19',
-      'CONCEPT' => 's 8',
-      'instruction' => 's 9',
-      'concept' => 's 11'
+      "'}'" => 's 22',
+      'instruction' => 's 8',
+      "'instruction'15" => 's 13',
+      'LITERAL' => 'r 15',
+      'ROUTE' => 'r 15'
     ),
     array(
       'DEFINE' => 'r 6',
       '#' => 'r 6'
     ),
     array(
-      'concept' => 's 21',
-      'CONCEPT' => 's 8'
+      'concept' => 's 24',
+      'LITERAL' => 's 9',
+      'ROUTE' => 's 10'
     ),
     array(
+      "'{'" => 'r 9',
+      "','" => 'r 9',
+      'DEFINE' => 'r 9',
+      '#' => 'r 9'
+    ),
+    array(
+      'concept' => 's 26',
+      'LITERAL' => 's 9',
+      'ROUTE' => 's 10'
+    ),
+    array(
+      "','" => 'r 8',
       "'{'" => 'r 8',
       'DEFINE' => 'r 8',
       '#' => 'r 8'
@@ -137,7 +182,7 @@ class GrammarParser extends \Genesis\Lime\LimeParser {
       '#' => 'r 1'
     ),
     array(
-      '#' => 'r 15'
+      '#' => 'r 18'
     )
   );
   public $d = array(
@@ -195,40 +240,60 @@ class GrammarParser extends \Genesis\Lime\LimeParser {
     $result[] = $tokens[1];
   }
 
-  function reduce_9_concept_1($tokens, &$result) {
-    // (9) concept :=  CONCEPT
+  function reduce_9_concept_list_2($tokens, &$result) {
+    // (9) concept_list :=  concept_list  ','  concept
+    $result = reset($tokens);
+    $tokens[0][] = $tokens[2]; $result = $tokens[0];
+  }
+
+  function reduce_10_concept_1($tokens, &$result) {
+    // (10) concept :=  LITERAL
     $result = reset($tokens);
   }
 
-  function reduce_10_instruction_list10_1($tokens, &$result) {
-    // (10) 'instruction_list'10 :=  ε
+  function reduce_11_concept_2($tokens, &$result) {
+    // (11) concept :=  ROUTE
+    $result = reset($tokens);
+  }
+
+  function reduce_12_instruction_list12_1($tokens, &$result) {
+    // (12) 'instruction_list'12 :=  ε
     $result = reset($tokens);
     $result = [];
   }
 
-  function reduce_11_instruction_list_1($tokens, &$result) {
-    // (11) instruction_list :=  'instruction_list'10  instruction  ';'
+  function reduce_13_instruction_list_1($tokens, &$result) {
+    // (13) instruction_list :=  'instruction_list'12  instruction  ';'
     $result = reset($tokens);
     $result[] = $tokens[1];
   }
 
-  function reduce_12_instruction_list_2($tokens, &$result) {
-    // (12) instruction_list :=  instruction_list  instruction
+  function reduce_14_instruction_list_2($tokens, &$result) {
+    // (14) instruction_list :=  instruction_list  instruction  ';'
     $result = reset($tokens);
+    $tokens[0][] = $tokens[1]; $result = $tokens[0];
   }
 
-  function reduce_13_instruction_1($tokens, &$result) {
-    // (13) instruction :=  concept
+  function reduce_15_instruction15_1($tokens, &$result) {
+    // (15) 'instruction'15 :=  ε
     $result = reset($tokens);
+    $result = [];
   }
 
-  function reduce_14_instruction_2($tokens, &$result) {
-    // (14) instruction :=  instruction  concept
+  function reduce_16_instruction_1($tokens, &$result) {
+    // (16) instruction :=  'instruction'15  concept
     $result = reset($tokens);
+    $result[] = $tokens[1];
   }
 
-  function reduce_15_start_1($tokens, &$result) {
-    // (15) 'start' :=  start_stmt
+  function reduce_17_instruction_2($tokens, &$result) {
+    // (17) instruction :=  instruction  concept
+    $result = reset($tokens);
+    $tokens[0][] = $tokens[1]; $result = $tokens[0];
+  }
+
+  function reduce_18_start_1($tokens, &$result) {
+    // (18) 'start' :=  start_stmt
     $result = reset($tokens);
   }
 
@@ -242,13 +307,16 @@ class GrammarParser extends \Genesis\Lime\LimeParser {
     'reduce_6_define_stmt_4',
     'reduce_7_concept_list7_1',
     'reduce_8_concept_list_1',
-    'reduce_9_concept_1',
-    'reduce_10_instruction_list10_1',
-    'reduce_11_instruction_list_1',
-    'reduce_12_instruction_list_2',
-    'reduce_13_instruction_1',
-    'reduce_14_instruction_2',
-    'reduce_15_start_1'
+    'reduce_9_concept_list_2',
+    'reduce_10_concept_1',
+    'reduce_11_concept_2',
+    'reduce_12_instruction_list12_1',
+    'reduce_13_instruction_list_1',
+    'reduce_14_instruction_list_2',
+    'reduce_15_instruction15_1',
+    'reduce_16_instruction_1',
+    'reduce_17_instruction_2',
+    'reduce_18_start_1'
   );
   public $a = array(
     array(
@@ -297,12 +365,22 @@ class GrammarParser extends \Genesis\Lime\LimeParser {
       'replace' => true
     ),
     array(
+      'symbol' => 'concept_list',
+      'len' => 3,
+      'replace' => true
+    ),
+    array(
       'symbol' => 'concept',
       'len' => 1,
       'replace' => true
     ),
     array(
-      'symbol' => "'instruction_list'10",
+      'symbol' => 'concept',
+      'len' => 1,
+      'replace' => true
+    ),
+    array(
+      'symbol' => "'instruction_list'12",
       'len' => 0,
       'replace' => false
     ),
@@ -313,12 +391,17 @@ class GrammarParser extends \Genesis\Lime\LimeParser {
     ),
     array(
       'symbol' => 'instruction_list',
-      'len' => 2,
+      'len' => 3,
       'replace' => true
     ),
     array(
+      'symbol' => "'instruction'15",
+      'len' => 0,
+      'replace' => false
+    ),
+    array(
       'symbol' => 'instruction',
-      'len' => 1,
+      'len' => 2,
       'replace' => true
     ),
     array(
@@ -334,5 +417,5 @@ class GrammarParser extends \Genesis\Lime\LimeParser {
   );
 }
 
-// Time: 0.0063779354095459 seconds
-// Memory: 1494400 bytes
+// Time: 0.0067880153656006 seconds
+// Memory: 1562248 bytes

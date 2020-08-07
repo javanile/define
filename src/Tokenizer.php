@@ -14,8 +14,10 @@ class Tokenizer extends \Nette\Tokenizer\Tokenizer
             "'{'" => '\{',
             "'}'" => '\}',
             "';'" => ';',
+            "','" => ',',
 
-            'CONCEPT' => '\w+',
+            'LITERAL' => '\w+',
+            'ROUTE' => '\/[\w\/_-]+',
 
             'NUMBER' => '\d+',
             'WHITESPACE' => '\s+',

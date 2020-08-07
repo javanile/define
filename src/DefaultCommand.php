@@ -61,11 +61,12 @@ class DefaultCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $output->writeln('<comment>Brick successful added.</comment>');
 
         $concept = $input->getArgument('concept');
         $prefix = $input->getOption('prefix');
         $this->debug = boolval($input->getOption('debug'));
+
+        $output->writeln("<comment>Define: {$concept}</comment>");
 
         $this->tokenizer = new Tokenizer();
         $this->parser = new ParseEngine(new DefineParser());
@@ -80,6 +81,9 @@ class DefaultCommand extends Command
 
         $this->processNotDefinedConcepts();
         $this->processNotRelatedConcepts($concept);
+        $this->processInstructionsScope();
+
+        echo "Done\n";
 
         return 0;
     }
@@ -118,8 +122,28 @@ class DefaultCommand extends Command
         $countNotDefinedConcepts = count($notDefinedConcepts = $this->parser->parser->getNotDefinedConcepts());
         if ($countNotDefinedConcepts > 0) {
             foreach ($notDefinedConcepts as $concept) {
-                echo "ERROR: Undefined concept '${concept}' at\n";
+                echo "ERROR: Undefined concept '${concept}'.\n";
             }
+            exit(1);
+        }
+    }
+
+    /**
+     * @param $mainConcept
+     */
+    protected function processNotRelatedConcepts($mainConcept)
+    {
+        $countNotRelatedConcepts = count($notRelatedConcepts = $this->parser->parser->getNotRelatedConcepts());
+        if ($countNotRelatedConcepts > 1) {
+            foreach ($notRelatedConcepts as $concept) {
+                if ($concept == $mainConcept) {
+                    continue;
+                }
+                echo "ERROR: Defined unused concept '${concept}'\n";
+            }
+            exit(1);
+        } elseif ($countNotRelatedConcepts == 1 && $notRelatedConcepts[0] != $mainConcept) {
+            echo "ERROR: Main concept '{$mainConcept}' not match with expected '{$notRelatedConcepts[0]}'.\n";
             exit(1);
         }
     }
@@ -127,21 +151,23 @@ class DefaultCommand extends Command
     /**
      *
      */
-    protected function processNotRelatedConcepts($mainConcept)
+    protected function processInstructionsScope()
     {
+        $concepts = $this->parser->parser->getDefinedConcepts();
 
-        $countNotRelatedConcepts = count($notRelatedConcepts = $this->parser->parser->getNotRelatedConcepts());
-        if ($countNotRelatedConcepts > 1) {
-            foreach ($notRelatedConcepts as $concept) {
-                if ($concept == $mainConcept) {
-                    continue;
+        foreach ($concepts as $concept) {
+            $instructions = $this->parser->parser->getConceptInstructions($concept);
+            foreach ($instructions as $instruction) {
+                foreach ($instruction as $requiredConcept) {
+                    if (!$this->parser->parser->isDefinedConcept($requiredConcept)) {
+                        echo "ERROR: Undefined concept '{$requiredConcept}' in instruction.\n";
+                        exit(1);
+                    } elseif (!$this->parser->parser->discoverConcept($requiredConcept, $concept)) {
+                        echo "ERROR: Can't access to '{$requiredConcept}' from '{$concept}'.\n";
+                        exit(1);
+                    }
                 }
-                echo "ERROR: Defined unused concept '${concept}' at.\n";
             }
-            exit(1);
-        } elseif ($countNotRelatedConcepts == 1 && $notRelatedConcepts[0] != $concept) {
-            echo "ERROR: Main concept '${concept}' not match with expected '{$notRelatedConcepts[0]}.'\n";
-            exit(1);
         }
     }
 }
