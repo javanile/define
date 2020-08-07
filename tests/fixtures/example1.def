@@ -3,3 +3,7 @@
  */
 
 define Example1 with Example2
+{
+    Example3 load
+
+}
