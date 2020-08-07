@@ -10,6 +10,7 @@ start_stmt = loads_stmt
            .
 
 loads_stmt = define_stmt
+           | loads_stmt define_stmt
            .
 
 define_stmt = DEFINE concept { $this->define($2); }

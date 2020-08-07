@@ -78,8 +78,8 @@ class DefaultCommand extends Command
             $this->parseFile($file);
         }
 
-        #$this->processNotRelatedConcepts($concept);
-        $this->processNotDefinedConcepts($concept);
+        $this->processNotDefinedConcepts();
+        $this->processNotRelatedConcepts($concept);
 
         return 0;
     }
@@ -113,16 +113,13 @@ class DefaultCommand extends Command
     /**
      *
      */
-    protected function processNotRelatedConcepts()
+    protected function processNotDefinedConcepts()
     {
-        $countNotRelatedConcepts = count($notRelatedConcepts = $this->parser->parser->getNotRelatedConcepts());
-        if ($countNotRelatedConcepts > 1) {
-            foreach ($notRelatedConcepts as $concept) {
+        $countNotDefinedConcepts = count($notDefinedConcepts = $this->parser->parser->getNotDefinedConcepts());
+        if ($countNotDefinedConcepts > 0) {
+            foreach ($notDefinedConcepts as $concept) {
                 echo "ERROR: Undefined concept '${concept}' at\n";
             }
-            exit(1);
-        } elseif ($countNotRelatedConcepts == 1 && $notRelatedConcepts[0] != $concept) {
-            echo "ERROR: Main concept '${concept}' not match with expected '{$notRelatedConcepts[0]}.'\n";
             exit(1);
         }
     }
@@ -130,12 +127,16 @@ class DefaultCommand extends Command
     /**
      *
      */
-    protected function processNotDefinedConcepts()
+    protected function processNotRelatedConcepts($mainConcept)
     {
-        $countNotDefinedConcepts = count($notDefinedConcepts = $this->parser->parser->getNotDefinedConcepts());
-        if ($countNotDefinedConcepts > 0) {
-            foreach ($notDefinedConcepts as $concept) {
-                echo "ERROR: Undefined concept '${concept}' at\n";
+
+        $countNotRelatedConcepts = count($notRelatedConcepts = $this->parser->parser->getNotRelatedConcepts());
+        if ($countNotRelatedConcepts > 1) {
+            foreach ($notRelatedConcepts as $concept) {
+                if ($concept == $mainConcept) {
+                    continue;
+                }
+                echo "ERROR: Defined unused concept '${concept}' at.\n";
             }
             exit(1);
         } elseif ($countNotRelatedConcepts == 1 && $notRelatedConcepts[0] != $concept) {

@@ -17,7 +17,11 @@ class DefineParser extends GrammarParser
 
     public function define($concept, $with = [], $instructions = [])
     {
-        $this->definedConcepts[] = $concept;
+        if (isset($this->definedConcepts[$concept])) {
+            echo "ERROR: Concept '{$concept}' already defined.\n";
+            exit(1);
+        }
+        $this->definedConcepts[$concept] = $concept;
         $this->relatedConcepts = array_merge($this->relatedConcepts, $with);
         $this->conceptInstructions[$concept] = $instructions;
     }

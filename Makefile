@@ -17,7 +17,10 @@ build:
 
 dist:
 	bash scripts/build.sh
-	sudo cp dist/propan.phar /usr/local/bin/propan
+	sudo cp dist/define.phar /usr/local/bin/define
+	git add .
+	git commit -am "latest release"
+	git push
 
 test-example1: build
 	php bin/define Example1 --debug --prefix tests/fixtures
