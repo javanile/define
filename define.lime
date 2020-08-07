@@ -2,6 +2,10 @@
 %class GrammarParser
 %start start_stmt
 
+%token '{'
+%token '}'
+%token ';'
+
 start_stmt = loads_stmt
            .
 
@@ -9,7 +13,9 @@ loads_stmt = define_stmt
            .
 
 define_stmt = DEFINE concept { $this->define($2); }
+            | DEFINE concept '{' instruction_list '}' { $this->define($2, [], $4); }
             | DEFINE concept WITH concept_list { $this->define($2, $4); }
+            | DEFINE concept WITH concept_list '{' instruction_list '}' { $this->define($2, $4, $6); }
             .
 
 concept_list = { $$ = []; } concept { $$[] = $2; }
@@ -17,3 +23,11 @@ concept_list = { $$ = []; } concept { $$[] = $2; }
 
 concept = CONCEPT
         .
+
+instruction_list = { $$ = []; } instruction ';' { $$[] = $2; }
+                 | instruction_list instruction
+                 .
+
+instruction = concept
+            | instruction concept
+            .

@@ -20,7 +20,7 @@ dist:
 	sudo cp dist/propan.phar /usr/local/bin/propan
 
 test-example1: build
-	php bin/define Example1 --prefix tests/fixtures
+	php bin/define Example1 --debug --prefix tests/fixtures
 
 test-build:
 	php bin/propan build .

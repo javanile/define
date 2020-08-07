@@ -14,4 +14,9 @@ $app->add($cmd);
 
 $app->setDefaultCommand($cmd->getName(), true);
 
-$app->run();
+try {
+    $app->run();
+} catch (Exception $e) {
+    echo $e->getMessage() . "\n";
+    exit(1);
+}
