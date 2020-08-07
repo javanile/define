@@ -20,19 +20,39 @@ class DefineParser extends \Genesis\Lime\LimeParser {
   public $qi = 0;
   public $i = array(
     array(
-      'a' => 's 1',
-      'b' => 's 2',
-      'stmt' => 's 3',
+      'define_stmt' => 's 1',
+      'DEFINE' => 's 2',
+      'stmt' => 's 8',
       "'start'" => "a 'start'"
     ),
     array(
       '#' => 'r 0'
     ),
     array(
+      'concept' => 's 3',
+      'CONCEPT' => 's 7'
+    ),
+    array(
+      'WITH' => 's 4',
       '#' => 'r 1'
     ),
     array(
+      'concept_list' => 's 5',
+      'concept' => 's 6',
+      'CONCEPT' => 's 7'
+    ),
+    array(
       '#' => 'r 2'
+    ),
+    array(
+      '#' => 'r 3'
+    ),
+    array(
+      'WITH' => 'r 4',
+      '#' => 'r 4'
+    ),
+    array(
+      '#' => 'r 5'
     )
   );
   public $d = array(
@@ -40,24 +60,42 @@ class DefineParser extends \Genesis\Lime\LimeParser {
   );
   public $errors = array();
   function reduce_0_stmt_1($tokens, &$result) {
-    // (0) stmt :=  a
+    // (0) stmt :=  define_stmt
     $result = reset($tokens);
   }
 
-  function reduce_1_stmt_2($tokens, &$result) {
-    // (1) stmt :=  b
+  function reduce_1_define_stmt_1($tokens, &$result) {
+    // (1) define_stmt :=  DEFINE  concept
     $result = reset($tokens);
   }
 
-  function reduce_2_start_1($tokens, &$result) {
-    // (2) 'start' :=  stmt
+  function reduce_2_define_stmt_2($tokens, &$result) {
+    // (2) define_stmt :=  DEFINE  concept  WITH  concept_list
+    $result = reset($tokens);
+  }
+
+  function reduce_3_concept_list_1($tokens, &$result) {
+    // (3) concept_list :=  concept
+    $result = reset($tokens);
+  }
+
+  function reduce_4_concept_1($tokens, &$result) {
+    // (4) concept :=  CONCEPT
+    $result = reset($tokens);
+  }
+
+  function reduce_5_start_1($tokens, &$result) {
+    // (5) 'start' :=  stmt
     $result = reset($tokens);
   }
 
   public $method = array(
     'reduce_0_stmt_1',
-    'reduce_1_stmt_2',
-    'reduce_2_start_1'
+    'reduce_1_define_stmt_1',
+    'reduce_2_define_stmt_2',
+    'reduce_3_concept_list_1',
+    'reduce_4_concept_1',
+    'reduce_5_start_1'
   );
   public $a = array(
     array(
@@ -66,7 +104,22 @@ class DefineParser extends \Genesis\Lime\LimeParser {
       'replace' => true
     ),
     array(
-      'symbol' => 'stmt',
+      'symbol' => 'define_stmt',
+      'len' => 2,
+      'replace' => true
+    ),
+    array(
+      'symbol' => 'define_stmt',
+      'len' => 4,
+      'replace' => true
+    ),
+    array(
+      'symbol' => 'concept_list',
+      'len' => 1,
+      'replace' => true
+    ),
+    array(
+      'symbol' => 'concept',
       'len' => 1,
       'replace' => true
     ),
@@ -78,5 +131,5 @@ class DefineParser extends \Genesis\Lime\LimeParser {
   );
 }
 
-// Time: 0.0055148601531982 seconds
+// Time: 0.0091919898986816 seconds
 // Memory: 1346624 bytes

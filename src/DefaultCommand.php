@@ -15,6 +15,8 @@ use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Process\Process;
 use ZipArchive;
+use Genesis\Lime\ParseEngine;
+use Genesis\Lime\ParseError;
 
 class DefaultCommand extends Command
 {
@@ -47,21 +49,34 @@ class DefaultCommand extends Command
 
         $prefix = $input->getOption('prefix');
 
-        $tokenizer = new \Nette\Tokenizer\Tokenizer([
-            'NUMBER' => '\d+',
-            'WHITESPACE' => '\s+',
-            'STRING' => '\w+',
-            'COMMENT' => '\/\*(\*(?!\/)|[^*])*\*\/',
-        ]);
+        $this->tokenizer = new Tokenizer();
+        $this->parser = new ParseEngine(new DefineParser());
 
         $files = Glob::glob(Path::makeAbsolute('**/*.def', Path::makeAbsolute($prefix, getcwd())));
         foreach ($files as $file) {
-            $stream = $tokenizer->tokenize(file_get_contents($file));
-            foreach ($stream as $token) {
-                var_dump($token);
-            }
+            $this->parseFile($file);
         }
 
         return 0;
+    }
+
+    protected function parseFile($file)
+    {
+        try {
+            $this->parser->reset();
+            $stream = $this->tokenizer->tokenize(file_get_contents($file));
+            foreach ($stream->tokens as $token) {
+                if ($token->type == 'COMMENT' || $token->type == 'WHITESPACE') {
+                    continue;
+                }
+                $this->parser->eat($token->type, $token->value);
+            }
+            $result = $this->parser->eat_eof();
+            var_dump($result);
+        } catch ( ParseError $e ) {
+            $error = $e->getMessage();
+            echo $error."\n";
+            exit(2);
+        }
     }
 }

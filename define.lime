@@ -2,4 +2,15 @@
 %class DefineParser
 %start stmt
 
-stmt =  .
+stmt = define_stmt
+     .
+
+define_stmt = DEFINE concept
+            | DEFINE concept WITH concept_list
+            .
+
+concept_list = concept
+             .
+
+concept = CONCEPT
+        .
