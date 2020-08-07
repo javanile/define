@@ -8,6 +8,8 @@ class DefineParser extends GrammarParser
     protected $relatedConcepts;
     protected $allRelatedConcepts;
     protected $conceptInstructions;
+    protected $currentFile;
+    protected $currentLine;
 
     public function __construct()
     {
@@ -29,10 +31,10 @@ class DefineParser extends GrammarParser
         */
 
         if (isset($this->definedConcepts[$concept])) {
-            echo "ERROR: Concept '{$concept}' already defined.\n";
+            echo "ERROR: Concept '{$concept}' already defined at '{$this->definedConcepts[$concept]}'.\n";
             exit(1);
         }
-        $this->definedConcepts[$concept] = $concept;
+        $this->definedConcepts[$concept] = $this->currentFile.':'.$this->currentLine;
         $this->relatedConcepts[$concept] = $with;
         $this->allRelatedConcepts = array_merge($this->allRelatedConcepts, $with);
         $this->conceptInstructions[$concept] = $instructions;
@@ -77,5 +79,15 @@ class DefineParser extends GrammarParser
         }
 
         return false;
+    }
+
+    public function setCurrentFile($file)
+    {
+        $this->currentFile = $file;
+    }
+
+    public function setCurrentLine($line)
+    {
+        $this->currentLine = $line;
     }
 }

@@ -95,13 +95,16 @@ class DefaultCommand extends Command
         $line = 1;
         try {
             $this->parser->reset();
+            $this->parser->parser->setCurrentFile($file);
+            $this->parser->parser->setCurrentLine($line);
             $stream = $this->tokenizer->tokenize(file_get_contents($file));
             foreach ($stream->tokens as $token) {
                 if ($this->debug) {
                     echo "#[{$token->type} {$file}:] ".json_encode($token->value)."\n";
                 }
                 if ($token->type == 'COMMENT' || $token->type == 'WHITESPACE') {
-                    $line += substr_count($token->value, "\n" );
+                    $line += substr_count($token->value, "\n");
+                    $this->parser->parser->setCurrentLine($line);
                     continue;
                 }
                 $this->parser->eat($token->type, $token->value);
