@@ -61,7 +61,6 @@ class DefaultCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-
         $concept = $input->getArgument('concept');
         $prefix = $input->getOption('prefix');
         $this->debug = boolval($input->getOption('debug'));
@@ -93,6 +92,7 @@ class DefaultCommand extends Command
      */
     protected function parseFile($file)
     {
+        $line = 1;
         try {
             $this->parser->reset();
             $stream = $this->tokenizer->tokenize(file_get_contents($file));
@@ -101,6 +101,7 @@ class DefaultCommand extends Command
                     echo "#[{$token->type} {$file}:] ".json_encode($token->value)."\n";
                 }
                 if ($token->type == 'COMMENT' || $token->type == 'WHITESPACE') {
+                    $line += substr_count($token->value, "\n" );
                     continue;
                 }
                 $this->parser->eat($token->type, $token->value);
@@ -109,7 +110,7 @@ class DefaultCommand extends Command
             //var_dump($result);
         } catch (\Exception $e) {
             $error = $e->getMessage();
-            echo "{$error} on {$file}\n";
+            echo "{$error} on {$file}:{$line}\n";
             exit(2);
         }
     }
