@@ -31,7 +31,7 @@ class DefineParser extends GrammarParser
         */
 
         if (isset($this->definedConcepts[$concept])) {
-            echo "ERROR: Concept '{$concept}' already defined at '{$this->definedConcepts[$concept]}'.\n";
+            echo "ERROR: Concept '{$concept}' already defined at '{$this->definedConcepts[$concept]} ({$this->currentFile}:$this->currentLine)'.\n";
             exit(1);
         }
         $this->definedConcepts[$concept] = $this->currentFile.':'.$this->currentLine;
