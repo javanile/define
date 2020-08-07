@@ -109,7 +109,7 @@ class DefaultCommand extends Command
             //var_dump($result);
         } catch (\Exception $e) {
             $error = $e->getMessage();
-            echo $error."\n";
+            echo "{$error} on {$file}\n";
             exit(2);
         }
     }
