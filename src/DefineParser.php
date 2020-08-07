@@ -4,13 +4,39 @@ namespace JavanileDefine;
 
 class DefineParser extends GrammarParser
 {
+    /**
+     * @var array
+     */
     protected $definedConcepts;
+
+    /**
+     * @var array
+     */
     protected $relatedConcepts;
+
+    /**
+     * @var array
+     */
     protected $allRelatedConcepts;
+
+    /**
+     * @var array
+     */
     protected $conceptInstructions;
+
+    /**
+     * @var
+     */
     protected $currentFile;
+
+    /**
+     * @var
+     */
     protected $currentLine;
 
+    /**
+     * DefineParser constructor.
+     */
     public function __construct()
     {
         $this->definedConcepts = [];
@@ -19,6 +45,11 @@ class DefineParser extends GrammarParser
         $this->conceptInstructions = [];
     }
 
+    /**
+     * @param $concept
+     * @param array $with
+     * @param array $instructions
+     */
     public function define($concept, $with = [], $instructions = [])
     {
         /*
@@ -40,31 +71,53 @@ class DefineParser extends GrammarParser
         $this->conceptInstructions[$concept] = $instructions;
     }
 
+    /**
+     * @return array
+     */
     public function getNotRelatedConcepts()
     {
         return array_unique(array_diff(array_keys($this->definedConcepts), $this->allRelatedConcepts));
     }
 
+    /**
+     * @return array
+     */
     public function getNotDefinedConcepts()
     {
         return array_unique(array_diff($this->allRelatedConcepts, array_keys($this->definedConcepts)));
     }
 
+    /**
+     * @return array
+     */
     public function getDefinedConcepts()
     {
         return array_keys($this->definedConcepts);
     }
 
+    /**
+     * @param $concept
+     * @return mixed
+     */
     public function getConceptInstructions($concept)
     {
         return $this->conceptInstructions[$concept];
     }
 
+    /**
+     * @param $concept
+     * @return bool
+     */
     public function isDefinedConcept($concept)
     {
         return isset($this->definedConcepts[$concept]);
     }
 
+    /**
+     * @param $requiredConcept
+     * @param $fromConcept
+     * @return bool
+     */
     public function discoverConcept($requiredConcept, $fromConcept)
     {
         if ($requiredConcept == $fromConcept) {
@@ -81,11 +134,17 @@ class DefineParser extends GrammarParser
         return false;
     }
 
+    /**
+     * @param $file
+     */
     public function setCurrentFile($file)
     {
         $this->currentFile = $file;
     }
 
+    /**
+     * @param $line
+     */
     public function setCurrentLine($line)
     {
         $this->currentLine = $line;
