@@ -13,14 +13,14 @@ install-dev:
 	sudo chmod +x /usr/local/bin/box
 
 build:
-	docker run --rm -v ${PWD}:/app javanile/lime define.lime > src/DefineParser.php
+	docker run --rm -v ${PWD}:/app javanile/lime define.lime > src/GrammarParser.php
 
 dist:
 	bash scripts/build.sh
 	sudo cp dist/propan.phar /usr/local/bin/propan
 
 test-example1: build
-	php bin/define example1 --prefix tests/fixtures
+	php bin/define Example1 --prefix tests/fixtures
 
 test-build:
 	php bin/propan build .

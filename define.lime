@@ -1,15 +1,18 @@
 %namespace JavanileDefine
-%class DefineParser
-%start stmt
+%class GrammarParser
+%start start_stmt
 
-stmt = define_stmt
-     .
+start_stmt = loads_stmt
+           .
 
-define_stmt = DEFINE concept
-            | DEFINE concept WITH concept_list
+loads_stmt = define_stmt
+           .
+
+define_stmt = DEFINE concept { $this->define($2); }
+            | DEFINE concept WITH concept_list { $this->define($2, $4); }
             .
 
-concept_list = concept
+concept_list = { $$ = []; } concept { $$[] = $2; }
              .
 
 concept = CONCEPT

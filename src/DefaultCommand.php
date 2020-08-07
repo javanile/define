@@ -47,6 +47,7 @@ class DefaultCommand extends Command
     {
         $output->writeln('<comment>Brick successful added.</comment>');
 
+        $concept = $input->getArgument('concept');
         $prefix = $input->getOption('prefix');
 
         $this->tokenizer = new Tokenizer();
@@ -56,6 +57,30 @@ class DefaultCommand extends Command
         foreach ($files as $file) {
             $this->parseFile($file);
         }
+
+        $countNotRelatedConcepts = count($notRelatedConcepts = $this->parser->parser->getNotRelatedConcepts());
+        if ($countNotRelatedConcepts > 1) {
+            foreach ($notRelatedConcepts as $concept) {
+                echo "ERROR: Undefined concept '${concept}' at\n";
+            }
+            exit(1);
+        } elseif ($countNotRelatedConcepts == 1 && $notRelatedConcepts[0] != $concept) {
+            echo "ERROR: Main concept '${concept}' not match with expected '{$notRelatedConcepts[0]}.'\n";
+            exit(1);
+        }
+
+        $countNotDefinedConcepts = count($notDefinedConcepts = $this->parser->parser->getNotDefinedConcepts());
+        if ($countNotDefinedConcepts > 0) {
+            foreach ($notDefinedConcepts as $concept) {
+                echo "ERROR: Undefined concept '${concept}' at\n";
+            }
+            exit(1);
+        } elseif ($countNotRelatedConcepts == 1 && $notRelatedConcepts[0] != $concept) {
+            echo "ERROR: Main concept '${concept}' not match with expected '{$notRelatedConcepts[0]}.'\n";
+            exit(1);
+        }
+
+        var_dump($notRelatedConcepts);
 
         return 0;
     }
@@ -72,7 +97,7 @@ class DefaultCommand extends Command
                 $this->parser->eat($token->type, $token->value);
             }
             $result = $this->parser->eat_eof();
-            var_dump($result);
+            //var_dump($result);
         } catch ( ParseError $e ) {
             $error = $e->getMessage();
             echo $error."\n";
