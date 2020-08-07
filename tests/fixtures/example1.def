@@ -4,7 +4,7 @@
 
 define Example1 with Example2, Example3, Routes
 
-define Example2 with load
+define Example2 with load, test
 
 define Example3 with test
 
@@ -18,7 +18,6 @@ define /Cavallo/ciao with Example2
 }
 
 define Routes with
-    test,
     /Cavallo/ciao
 
 /*define Demo1*/
