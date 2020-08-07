@@ -7,7 +7,6 @@ define Example2 with load, test
 define Example3 with test
 
 define load
-define test
 
 define /routes/ciao with Example2
 {
