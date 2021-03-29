@@ -1,6 +1,6 @@
 {
     "name": "javanile/define",
-    "description": "Micro DSL language.",
+    "description": "Define (Micro DSL)",
     "version": "0.1.0",
     "license": "MIT",
     "authors": [
