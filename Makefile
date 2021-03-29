@@ -13,7 +13,7 @@ install-dev:
 	sudo chmod +x /usr/local/bin/box
 
 build:
-	docker run --rm -v ${PWD}:/app javanile/lime define.lime > src/GrammarParser.php
+	@docker run --rm -v ${PWD}:/app javanile/lime define.lime > src/GrammarParser.php
 
 dist:
 	bash scripts/build.sh
@@ -22,11 +22,14 @@ dist:
 	git commit -am "latest release"
 	git push
 
+fork:
+	curl -sL git.io/fork.sh | bash -
+
+## -------
+## Testing
+## -------
 test-example1: build
-	php bin/define Example1 --debug --prefix tests/fixtures
+	@php bin/define Example1 --prefix tests/fixtures
 
 test-build:
 	php bin/propan build .
-
-fork:
-	curl -sL git.io/fork.sh | bash -

@@ -3,8 +3,9 @@
 [[ -d vendor ]] && mv vendor vendor.tmp
 [[ -f composer.lock ]] && mv composer.lock composer.lock.tmp
 
-composer install --no-ansi --no-dev --no-interaction \
-                 --no-progress --no-scripts --optimize-autoloader
+composer install \
+  --no-ansi --no-dev --no-interaction \
+ --no-progress --no-scripts --optimize-autoloader
 
 box build
 
