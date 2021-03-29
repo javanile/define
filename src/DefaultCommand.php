@@ -1,6 +1,6 @@
 <?php
 
-namespace JavanileDefine;
+namespace Javanile\Define;
 
 use Webmozart\Glob\Glob;
 use Webmozart\PathUtil\Path;

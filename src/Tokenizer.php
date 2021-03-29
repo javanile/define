@@ -1,6 +1,6 @@
 <?php
 
-namespace JavanileDefine;
+namespace Javanile\Define;
 
 class Tokenizer extends \Nette\Tokenizer\Tokenizer
 {
@@ -11,13 +11,10 @@ class Tokenizer extends \Nette\Tokenizer\Tokenizer
             'DEFINE' => 'define',
             'WITH' => 'with',
 
-            "'{'" => '\{',
-            "'}'" => '\}',
-            "';'" => ';',
             "','" => ',',
 
             'LITERAL' => '\w+',
-            'ROUTE' => '\/[\w\/_-]+',
+            'PATH' => '\/[\w\/_-]+',
 
             'NUMBER' => '\d+',
             'WHITESPACE' => '\s+',

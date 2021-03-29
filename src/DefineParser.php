@@ -1,6 +1,6 @@
 <?php
 
-namespace JavanileDefine;
+namespace Javanile\Define;
 
 class DefineParser extends GrammarParser
 {
