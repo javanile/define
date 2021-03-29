@@ -5,7 +5,7 @@ use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 
 test('example', function () {
-    $app = new Application();
+    $app = new Application('test');
     $app->add(new DefaultCommand());
 
     $tester = new CommandTester($app->find('define'));
