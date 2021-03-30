@@ -31,5 +31,8 @@ fork:
 test-example1: build
 	@php bin/define Example1 --prefix tests/fixtures
 
+test-working-set: build
+	@php bin/define MainConcept --prefix tests/fixtures/working-set
+
 test-build:
 	php bin/propan build .

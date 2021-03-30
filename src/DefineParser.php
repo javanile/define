@@ -67,7 +67,7 @@ class DefineParser extends GrammarParser
         }
         $this->definedConcepts[$concept] = $this->currentFile.':'.$this->currentLine;
         $this->relatedConcepts[$concept] = $with;
-        $this->allRelatedConcepts = array_merge($this->allRelatedConcepts, $with);
+        //$this->allRelatedConcepts = array_merge($this->allRelatedConcepts, $with);
         $this->conceptInstructions[$concept] = $instructions;
     }
 

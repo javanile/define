@@ -27,12 +27,7 @@
     ],
     "autoload": {
         "psr-4": {
-            "JavanileDefine\\": "src/"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "JavanileDefine\\Tests\\": "tests/"
+            "Javanile\\Define\\": "src/"
         }
     },
     "scripts": {

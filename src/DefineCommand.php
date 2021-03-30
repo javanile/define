@@ -15,10 +15,10 @@ use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Process\Process;
 use ZipArchive;
-use Genesis\Lime\ParseEngine;
+
 use Genesis\Lime\ParseError;
 
-class DefaultCommand extends Command
+class DefineCommand extends Command
 {
     /**
      *
@@ -68,7 +68,7 @@ class DefaultCommand extends Command
         $output->writeln("<comment>Define: {$concept}</comment>");
 
         $this->tokenizer = new Tokenizer();
-        $this->parser = new ParseEngine(new DefineParser());
+        $this->parser = new ParserEngine();
 
         $files = Glob::glob(Path::makeAbsolute('**/*.def', Path::makeAbsolute($prefix, getcwd())));
         foreach ($files as $file) {
@@ -95,8 +95,8 @@ class DefaultCommand extends Command
         $line = 1;
         try {
             $this->parser->reset();
-            $this->parser->parser->setCurrentFile($file);
-            $this->parser->parser->setCurrentLine($line);
+            $this->parser->setCurrentFile($file);
+            $this->parser->setCurrentLine($line);
             $stream = $this->tokenizer->tokenize(file_get_contents($file));
             foreach ($stream->tokens as $token) {
                 if ($this->debug) {
@@ -123,7 +123,9 @@ class DefaultCommand extends Command
      */
     protected function processNotDefinedConcepts()
     {
-        $countNotDefinedConcepts = count($notDefinedConcepts = $this->parser->parser->getNotDefinedConcepts());
+        //$countNotDefinedConcepts = count($notDefinedConcepts = $this->parser->parser->getNotDefinedConcepts());
+        $notDefinedConcepts = 0;
+        $countNotDefinedConcepts = 0;
         if ($countNotDefinedConcepts > 0) {
             foreach ($notDefinedConcepts as $concept) {
                 echo "ERROR: Undefined concept '${concept}'.\n";
@@ -137,7 +139,9 @@ class DefaultCommand extends Command
      */
     protected function processNotRelatedConcepts($mainConcept)
     {
-        $countNotRelatedConcepts = count($notRelatedConcepts = $this->parser->parser->getNotRelatedConcepts());
+        //$countNotRelatedConcepts = count($notRelatedConcepts = $this->parser->parser->getNotRelatedConcepts());
+        $notRelatedConcepts = 0;
+        $countNotRelatedConcepts = 0;
         if ($countNotRelatedConcepts > 1) {
             foreach ($notRelatedConcepts as $concept) {
                 if ($concept == $mainConcept) {
