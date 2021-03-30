@@ -13,9 +13,9 @@ define_stmt = DEFINE concept { $this->define($2); }
             | DEFINE concept WITH concept_list { $this->define($2, $4); }
             .
 
-concept_list = { $$ = []; } concept { $$[] = $2; }
-            | concept_list concept { $1[] = $2; $$ = $1; }
-            .
+concept_list = { $$ = []; } concept { $$ = $this->append($$, $2); }
+             | concept_list concept { $$ = $this->append($$, $2); }
+             .
 
 concept = LITERAL
         | PATH

@@ -29,4 +29,20 @@ class ParserEngine extends ParseEngine
     {
         $this->parser->setCurrentLine($line);
     }
+
+    /**
+     *
+     */
+    public function getGraph()
+    {
+        return $this->parser->getGraph();
+    }
+
+    /**
+     *
+     */
+    public function getStructure()
+    {
+        return $this->parser->getStructure();
+    }
 }

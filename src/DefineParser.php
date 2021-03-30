@@ -5,6 +5,16 @@ namespace Javanile\Define;
 class DefineParser extends GrammarParser
 {
     /**
+     *
+     */
+    protected $graph;
+
+    /**
+     *
+     */
+    protected $structure;
+
+    /**
      * @var array
      */
     protected $definedConcepts;
@@ -48,9 +58,8 @@ class DefineParser extends GrammarParser
     /**
      * @param $concept
      * @param array $with
-     * @param array $instructions
      */
-    public function define($concept, $with = [], $instructions = [])
+    public function define($concept, $with = [])
     {
         /*
         var_dump([
@@ -68,7 +77,25 @@ class DefineParser extends GrammarParser
         $this->definedConcepts[$concept] = $this->currentFile.':'.$this->currentLine;
         $this->relatedConcepts[$concept] = $with;
         //$this->allRelatedConcepts = array_merge($this->allRelatedConcepts, $with);
-        $this->conceptInstructions[$concept] = $instructions;
+
+        $this->graph[$concept] = $with;
+    }
+
+    /**
+     * @param $conceptList
+     * @param $concept
+     * @return mixed
+     */
+    public function append($conceptList, $concept)
+    {
+        $conceptList[] = [
+            'concept' => $concept,
+            'file' => $this->currentFile,
+            'line' => $this->currentLine,
+        ];
+        var_dump($conceptList, $concept);
+
+        return $conceptList;
     }
 
     /**
@@ -93,15 +120,6 @@ class DefineParser extends GrammarParser
     public function getDefinedConcepts()
     {
         return array_keys($this->definedConcepts);
-    }
-
-    /**
-     * @param $concept
-     * @return mixed
-     */
-    public function getConceptInstructions($concept)
-    {
-        return $this->conceptInstructions[$concept];
     }
 
     /**
@@ -148,5 +166,21 @@ class DefineParser extends GrammarParser
     public function setCurrentLine($line)
     {
         $this->currentLine = $line;
+    }
+
+    /**
+     *
+     */
+    public function getGraph()
+    {
+        return $this->graph;
+    }
+
+    /**
+     *
+     */
+    public function getStructure()
+    {
+        return $this->structure;
     }
 }

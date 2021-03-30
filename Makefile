@@ -34,5 +34,8 @@ test-example1: build
 test-working-set: build
 	@php bin/define MainConcept --prefix tests/fixtures/working-set
 
+test-scope-problem-set: build
+	@php bin/define MainConcept --prefix tests/fixtures/scope-problem-set
+
 test-build:
 	php bin/propan build .

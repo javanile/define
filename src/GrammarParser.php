@@ -137,13 +137,13 @@ class GrammarParser extends \Genesis\Lime\LimeParser {
   function reduce_6_concept_list_1($tokens, &$result) {
     // (6) concept_list :=  'concept_list'5  concept
     $result = reset($tokens);
-    $result[] = $tokens[1];
+    $result = $this->append($result, $tokens[1]);
   }
 
   function reduce_7_concept_list_2($tokens, &$result) {
     // (7) concept_list :=  concept_list  concept
     $result = reset($tokens);
-    $tokens[0][] = $tokens[1]; $result = $tokens[0];
+    $result = $this->append($result, $tokens[1]);
   }
 
   function reduce_8_concept_1($tokens, &$result) {
@@ -233,5 +233,5 @@ class GrammarParser extends \Genesis\Lime\LimeParser {
   );
 }
 
-// Time: 0.0049469470977783 seconds
-// Memory: 1349872 bytes
+// Time: 0.0055558681488037 seconds
+// Memory: 1350072 bytes

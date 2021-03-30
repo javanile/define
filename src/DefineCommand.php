@@ -47,6 +47,7 @@ class DefineCommand extends Command
             ->setDescription('Build a bundle from a Propan.json file')
             ->addArgument('concept', InputArgument::REQUIRED)
             ->addOption('prefix', null, InputOption::VALUE_REQUIRED, 'Install on specific path', getcwd())
+            ->addOption('graph', 'g', InputOption::VALUE_REQUIRED, 'Store Definitions Graph to FILE')
             ->addOption('debug', 'd', InputOption::VALUE_NONE, 'Run debugger')
         ;
     }
@@ -82,6 +83,9 @@ class DefineCommand extends Command
 
         $output->writeln("<info>{$concept}</info> is well-defined");
 
+        //var_dump($this->parser->getGraph());
+        var_dump($this->parser->getStructure());
+
         return 0;
     }
 
@@ -101,8 +105,8 @@ class DefineCommand extends Command
                     echo "#[{$token->type} {$file}:] ".json_encode($token->value)."\n";
                 }
                 if ($token->type == 'COMMENT' || $token->type == 'WHITESPACE') {
+                    $this->parser->setCurrentLine($line);
                     $line += substr_count($token->value, "\n");
-                    $this->parser->parser->setCurrentLine($line);
                     continue;
                 }
                 $this->parser->eat($token->type, $token->value);
@@ -162,7 +166,8 @@ class DefineCommand extends Command
         $concepts = $this->parser->parser->getDefinedConcepts();
 
         foreach ($concepts as $concept) {
-            $instructions = $this->parser->parser->getConceptInstructions($concept);
+            //$instructions = $this->parser->parser->getConceptInstructions($concept);
+            $instructions = [];
             foreach ($instructions as $instruction) {
                 foreach ($instruction as $requiredConcept) {
                     if (!$this->parser->parser->isDefinedConcept($requiredConcept)) {
