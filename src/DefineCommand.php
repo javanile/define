@@ -65,8 +65,6 @@ class DefineCommand extends Command
         $prefix = $input->getOption('prefix');
         $this->debug = boolval($input->getOption('debug'));
 
-        $output->writeln("<comment>Define: {$concept}</comment>");
-
         $this->tokenizer = new Tokenizer();
         $this->parser = new ParserEngine();
 
@@ -82,7 +80,7 @@ class DefineCommand extends Command
         $this->processNotRelatedConcepts($concept);
         $this->processInstructionsScope();
 
-        echo "Done\n";
+        $output->writeln("<info>{$concept}</info> is well-defined");
 
         return 0;
     }

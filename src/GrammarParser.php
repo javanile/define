@@ -233,5 +233,5 @@ class GrammarParser extends \Genesis\Lime\LimeParser {
   );
 }
 
-// Time: 0.005134105682373 seconds
+// Time: 0.0049469470977783 seconds
 // Memory: 1349872 bytes
