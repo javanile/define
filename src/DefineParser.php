@@ -61,6 +61,15 @@ class DefineParser extends GrammarParser
      */
     public function define($concept, $with = [])
     {
+        if (isset($this->definedConcepts[$concept])) {
+            echo "ERROR: Concept '{$concept}' already defined at '{$this->definedConcepts[$concept]} ({$this->currentFile}:$this->currentLine)'.\n";
+            exit(1);
+        }
+
+        $this->structure[$concept] = [
+
+        ];
+
         /*
         var_dump([
             'concept' => $concept,
@@ -70,10 +79,6 @@ class DefineParser extends GrammarParser
         die();
         */
 
-        if (isset($this->definedConcepts[$concept])) {
-            echo "ERROR: Concept '{$concept}' already defined at '{$this->definedConcepts[$concept]} ({$this->currentFile}:$this->currentLine)'.\n";
-            exit(1);
-        }
         $this->definedConcepts[$concept] = $this->currentFile.':'.$this->currentLine;
         $this->relatedConcepts[$concept] = $with;
         //$this->allRelatedConcepts = array_merge($this->allRelatedConcepts, $with);
@@ -88,12 +93,13 @@ class DefineParser extends GrammarParser
      */
     public function append($conceptList, $concept)
     {
+        var_dump($conceptList, $concept);
+
         $conceptList[] = [
             'concept' => $concept,
             'file' => $this->currentFile,
             'line' => $this->currentLine,
         ];
-        var_dump($conceptList, $concept);
 
         return $conceptList;
     }
