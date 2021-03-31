@@ -2,3 +2,5 @@
 define MainConcept with RelatedConcept
 
 define RelatedConcept
+
+define RelatedConcept1

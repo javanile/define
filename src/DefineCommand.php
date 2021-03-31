@@ -21,11 +21,6 @@ use Genesis\Lime\ParseError;
 class DefineCommand extends Command
 {
     /**
-     * Main tokenizer.
-     */
-    protected $tokenizer;
-
-    /**
      * Main parser.
      */
     protected $parser;
@@ -66,7 +61,6 @@ class DefineCommand extends Command
         $prefix = $input->getOption('prefix');
         $this->debug = boolval($input->getOption('debug'));
 
-        $this->tokenizer = new Tokenizer();
         $this->parser = new ParserEngine();
 
         $files = Glob::glob(Path::makeAbsolute('**/*.def', Path::makeAbsolute($prefix, getcwd())));
@@ -100,24 +94,9 @@ class DefineCommand extends Command
     protected function parseFile($file)
     {
         $line = 1;
+        $code = file_get_contents($file);
         try {
-            $this->parser->reset();
-            $this->parser->setCurrentFile($file);
-            $this->parser->setCurrentLine($line);
-            $stream = $this->tokenizer->tokenize(file_get_contents($file));
-            foreach ($stream->tokens as $token) {
-                if ($this->debug) {
-                    echo "#[{$token->type} {$file}:] ".json_encode($token->value)."\n";
-                }
-                if ($token->type == 'COMMENT' || $token->type == 'WHITESPACE') {
-                    $this->parser->setCurrentLine($line);
-                    $line += substr_count($token->value, "\n");
-                    continue;
-                }
-                $this->parser->eat($token->type, $token->value);
-            }
-            $result = $this->parser->eat_eof();
-            //var_dump($result);
+            $this->parser->parse($code, $file, $line);
         } catch (\Exception $e) {
             $error = $e->getMessage();
             echo "{$error} on {$file}:{$line}\n";
@@ -131,8 +110,6 @@ class DefineCommand extends Command
     protected function processNotDefinedConcepts()
     {
         $countNotDefinedConcepts = count($notDefinedConcepts = $this->parser->getNotDefinedConcepts());
-        $notDefinedConcepts = 0;
-        $countNotDefinedConcepts = 0;
         if ($countNotDefinedConcepts > 0) {
             foreach ($notDefinedConcepts as $concept) {
                 echo "ERROR: Undefined concept '${concept}'.\n";

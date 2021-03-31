@@ -97,6 +97,7 @@ class DefineParser extends GrammarParser
      */
     public function getNotDefinedConcepts()
     {
+        var_dump($this->relatedConcepts);
         return array_diff(array_keys($this->relatedConcepts), array_keys($this->concepts));
     }
 
