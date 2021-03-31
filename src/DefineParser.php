@@ -50,12 +50,15 @@ class DefineParser extends GrammarParser
     }
 
     /**
+     * Relate a concept with a concepts list.
+     *
      * @param $concept
      * @param $conceptList
      */
     public function relate($concept, $conceptList)
     {
         $this->concepts[$concept]['with'] = $conceptList;
+
         foreach ($conceptList as $relatedConcept => $info) {
             $info['relatedWith'] = $concept;
             $this->relatedConcepts[$concept][] = $info['relatedWith'];
