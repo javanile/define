@@ -61,7 +61,7 @@ class DefineParser extends GrammarParser
 
         foreach ($conceptList as $relatedConcept => $info) {
             $info['relatedWith'] = $concept;
-            $this->relatedConcepts[$concept][] = $info['relatedWith'];
+            $this->relatedConcepts[$relatedConcept][] = $info;
         }
     }
 
