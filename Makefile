@@ -28,8 +28,8 @@ fork:
 ## -------
 ## Testing
 ## -------
-test-example1: build
-	@php bin/define Example1 --prefix tests/fixtures
+test-minimal: build
+	@php bin/define Example1 --prefix tests/fixtures/minimal-set
 
 test-not-define-input-concept: build
 	@php bin/define BadConcept --prefix tests/fixtures/working-set

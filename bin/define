@@ -13,14 +13,14 @@ use Javanile\Define\DefineCommand;
 
 $app = new Application();
 $cmd = new DefineCommand();
+$out = new ConsoleOutput();
 
 $app->add($cmd);
 
 $app->setDefaultCommand($cmd->getName(), true);
 
 try {
-    $app->run(null, new ConsoleOutput());
+    $app->run(null, $out);
 } catch (Exception $e) {
-    echo $e->getMessage() . "\n";
-    exit(1);
+    $out->error($e->getMessage(), 3);
 }

@@ -30,10 +30,15 @@ class ConsoleOutput extends SymfonyConsoleOutput
     }
 
     /**
+     * Print-out error message and exit.
      *
+     * @param $message
+     * @param $exitCode
      */
-    public function error($message)
+    public function error($message, $exitCode)
     {
-        return $this->getErrorOutput()->writeln("<error>{$message}</error>");
+        $this->getErrorOutput()->writeln("<error>{$message}</error>");
+
+        exit($exitCode);
     }
 }
