@@ -31,6 +31,11 @@ class DefineCommand extends Command
     protected $debug;
 
     /**
+     *
+     */
+    protected $output;
+
+    /**
      * Configure the command options.
      *
      * @return void
@@ -57,6 +62,8 @@ class DefineCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $this->output = $output;
+
         $concept = $input->getArgument('concept');
         $prefix = $input->getOption('prefix');
         $this->debug = boolval($input->getOption('debug'));
@@ -98,9 +105,7 @@ class DefineCommand extends Command
         try {
             $this->parser->parse($code, $file, $line);
         } catch (\Exception $e) {
-            $error = $e->getMessage();
-            echo "{$error} on {$file}:{$line}\n";
-            exit(2);
+            $this->output->error("{$e->getMessage()} on {$file}:{$line}", 2);
         }
     }
 
@@ -119,23 +124,21 @@ class DefineCommand extends Command
     }
 
     /**
-     * @param $mainConcept
+     * @param $inputConcept
      */
-    protected function processNotRelatedConcepts($mainConcept)
+    protected function processNotRelatedConcepts($inputConcept)
     {
-        //$countNotRelatedConcepts = count($notRelatedConcepts = $this->parser->parser->getNotRelatedConcepts());
-        $notRelatedConcepts = 0;
-        $countNotRelatedConcepts = 0;
+        $countNotRelatedConcepts = count($notRelatedConcepts = $this->parser->getNotRelatedConcepts());
         if ($countNotRelatedConcepts > 1) {
             foreach ($notRelatedConcepts as $concept) {
-                if ($concept == $mainConcept) {
+                if ($concept == $inputConcept) {
                     continue;
                 }
                 echo "ERROR: Defined unused concept '${concept}'\n";
             }
             exit(1);
-        } elseif ($countNotRelatedConcepts == 1 && $notRelatedConcepts[0] != $mainConcept) {
-            echo "ERROR: Main concept '{$mainConcept}' not match with expected '{$notRelatedConcepts[0]}'.\n";
+        } elseif ($countNotRelatedConcepts == 1 && $notRelatedConcepts[0] != $inputConcept) {
+            echo "ERROR: Input concept '{$inputConcept}' not match with expected '{$notRelatedConcepts[0]}'.\n";
             exit(1);
         }
     }
