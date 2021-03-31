@@ -146,11 +146,22 @@ class DefineCommand extends Command
     /**
      *
      */
-    protected function processInstructionsScope()
+    protected function processConceptsScope()
     {
-        $concepts = $this->parser->parser->getDefinedConcepts();
+        $concepts = $this->parser->getDefinedConcepts();
 
-        foreach ($concepts as $concept) {
+        foreach ($concepts as $concept => $info) {
+            if (empty($info['with'])) {
+                continue;
+            }
+            $scope = [];
+            foreach ($info['with'] as $relatedConcept => $relatedInfo) {
+                if (empty($concepts[$relatedConcept]['with'])) {
+                    continue;
+                }
+
+            }
+            /*
             //$instructions = $this->parser->parser->getConceptInstructions($concept);
             $instructions = [];
             foreach ($instructions as $instruction) {
@@ -163,7 +174,7 @@ class DefineCommand extends Command
                         exit(1);
                     }
                 }
-            }
+            }*/
         }
     }
 }

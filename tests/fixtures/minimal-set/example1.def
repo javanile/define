@@ -1,1 +1,12 @@
 define Example1 with Example2
+
+define z
+
+define a with z1 z2
+
+define b with z1
+
+define c with a
+
+
+
