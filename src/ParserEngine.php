@@ -43,6 +43,18 @@ class ParserEngine extends ParseEngine
     }
 
     /**
+     * Check if concept is defined.
+     *
+     * @param $concept
+     *
+     * @return bool
+     */
+    public function getNotDefinedConcepts()
+    {
+        return $this->parser->getNotDefinedConcepts();
+    }
+
+    /**
      *
      */
     public function getGraph()

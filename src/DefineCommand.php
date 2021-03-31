@@ -130,7 +130,7 @@ class DefineCommand extends Command
      */
     protected function processNotDefinedConcepts()
     {
-        //$countNotDefinedConcepts = count($notDefinedConcepts = $this->parser->parser->getNotDefinedConcepts());
+        $countNotDefinedConcepts = count($notDefinedConcepts = $this->parser->getNotDefinedConcepts());
         $notDefinedConcepts = 0;
         $countNotDefinedConcepts = 0;
         if ($countNotDefinedConcepts > 0) {

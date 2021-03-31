@@ -1,6 +1,4 @@
 
-/**
- *
- *
- */
-define MainConcept with ConceptA ConceptB
+define MainConcept with RelatedConcept
+
+define RelatedConcept
