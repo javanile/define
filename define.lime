@@ -10,11 +10,11 @@ loads_stmt = define_stmt
            .
 
 define_stmt = DEFINE concept { $this->define($2); }
-            | DEFINE concept WITH concept_list { $this->define($2, $4); }
+            | DEFINE concept { $this->define($2); } WITH concept_list { $this->relate($2, $4); }
             .
 
-concept_list = { $$ = []; } concept { $$ = $this->append($$, $2); }
-             | concept_list concept { $$ = $this->append($$, $2); }
+concept_list = concept { $$ = $this->append([], $1); }
+             | concept_list concept { $$ = $this->append($1, $2); }
              .
 
 concept = LITERAL

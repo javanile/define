@@ -7,32 +7,12 @@ class DefineParser extends GrammarParser
     /**
      *
      */
-    protected $graph;
+    protected $concepts;
 
     /**
      *
      */
-    protected $structure;
-
-    /**
-     * @var array
-     */
-    protected $definedConcepts;
-
-    /**
-     * @var array
-     */
     protected $relatedConcepts;
-
-    /**
-     * @var array
-     */
-    protected $allRelatedConcepts;
-
-    /**
-     * @var array
-     */
-    protected $conceptInstructions;
 
     /**
      * @var
@@ -49,41 +29,37 @@ class DefineParser extends GrammarParser
      */
     public function __construct()
     {
-        $this->definedConcepts = [];
+        $this->concepts = [];
         $this->relatedConcepts = [];
-        $this->allRelatedConcepts = [];
-        $this->conceptInstructions = [];
     }
 
     /**
      * @param $concept
      * @param array $with
      */
-    public function define($concept, $with = [])
+    public function define($concept)
     {
-        if (isset($this->definedConcepts[$concept])) {
-            echo "ERROR: Concept '{$concept}' already defined at '{$this->definedConcepts[$concept]} ({$this->currentFile}:$this->currentLine)'.\n";
+        if (isset($this->concepts[$concept])) {
+            echo "ERROR: Concept '{$concept}' already defined at '{$this->concepts[$concept]['definedAt']} ({$this->currentFile}:$this->currentLine)'.\n";
             exit(1);
         }
 
-        $this->structure[$concept] = [
-
+        $this->concepts[$concept] = [
+            'definedAt' => $this->currentFile . ':' . $this->currentLine,
         ];
+    }
 
-        /*
-        var_dump([
-            'concept' => $concept,
-            'with' => $with,
-            'instructions' => $instructions
-        ]);
-        die();
-        */
-
-        $this->definedConcepts[$concept] = $this->currentFile.':'.$this->currentLine;
-        $this->relatedConcepts[$concept] = $with;
-        //$this->allRelatedConcepts = array_merge($this->allRelatedConcepts, $with);
-
-        $this->graph[$concept] = $with;
+    /**
+     * @param $concept
+     * @param $conceptList
+     */
+    public function relate($concept, $conceptList)
+    {
+        $this->concepts[$concept]['with'] = $conceptList;
+        foreach ($conceptList as $relatedConcept => $info) {
+            $info['relatedWith'] = $concept;
+            $this->relatedConcepts[$concept][] = $info['relatedWith'];
+        }
     }
 
     /**
@@ -93,12 +69,13 @@ class DefineParser extends GrammarParser
      */
     public function append($conceptList, $concept)
     {
-        var_dump($conceptList, $concept);
+        if (isset($conceptList[$concept])) {
+            echo "ERROR: Concept '{$concept}' duplicate at '{$conceptList[$concept]['relatedAt']} ({$this->currentFile}:$this->currentLine)'.\n";
+            exit(1);
+        }
 
-        $conceptList[] = [
-            'concept' => $concept,
-            'file' => $this->currentFile,
-            'line' => $this->currentLine,
+        $conceptList[$concept] = [
+            'relatedAt' => $this->currentFile.':'.$this->currentLine,
         ];
 
         return $conceptList;
@@ -109,7 +86,7 @@ class DefineParser extends GrammarParser
      */
     public function getNotRelatedConcepts()
     {
-        return array_unique(array_diff(array_keys($this->definedConcepts), $this->allRelatedConcepts));
+        return array_diff(array_keys($this->concepts), array_keys($this->relatedConcepts));
     }
 
     /**
@@ -117,7 +94,7 @@ class DefineParser extends GrammarParser
      */
     public function getNotDefinedConcepts()
     {
-        return array_unique(array_diff($this->allRelatedConcepts, array_keys($this->definedConcepts)));
+        return array_diff(array_keys($this->relatedConcepts), array_keys($this->concepts));
     }
 
     /**
@@ -125,21 +102,27 @@ class DefineParser extends GrammarParser
      */
     public function getDefinedConcepts()
     {
-        return array_keys($this->definedConcepts);
+        return array_keys($this->concepts);
     }
 
     /**
+     * Check if concept is defined.
+     *
      * @param $concept
+     *
      * @return bool
      */
-    public function isDefinedConcept($concept)
+    public function isConceptDefined($concept)
     {
-        return isset($this->definedConcepts[$concept]);
+        return isset($this->concepts[$concept]);
     }
 
     /**
+     *
+     *
      * @param $requiredConcept
      * @param $fromConcept
+     *
      * @return bool
      */
     public function discoverConcept($requiredConcept, $fromConcept)
@@ -179,7 +162,7 @@ class DefineParser extends GrammarParser
      */
     public function getGraph()
     {
-        return $this->graph;
+        return $this->concepts;
     }
 
     /**
@@ -187,6 +170,6 @@ class DefineParser extends GrammarParser
      */
     public function getStructure()
     {
-        return $this->structure;
+        return $this->concepts;
     }
 }
