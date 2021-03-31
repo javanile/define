@@ -21,17 +21,17 @@ use Genesis\Lime\ParseError;
 class DefineCommand extends Command
 {
     /**
-     *
+     * Main tokenizer.
      */
     protected $tokenizer;
 
     /**
-     *
+     * Main parser.
      */
     protected $parser;
 
     /**
-     *
+     * Debug flag.
      */
     protected $debug;
 
@@ -55,9 +55,9 @@ class DefineCommand extends Command
     /**
      * Execute the command.
      *
-     *
      * @param  InputInterface  $input
      * @param  OutputInterface  $output
+     *
      * @return int
      */
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -77,6 +77,11 @@ class DefineCommand extends Command
             $this->parseFile($file);
         }
 
+        if (!$this->parser->isConceptDefined($concept)) {
+            $output->writeln("<error>{$concept}</error> is not defined");
+            return 1;
+        }
+
         $this->processNotDefinedConcepts();
         $this->processNotRelatedConcepts($concept);
         $this->processInstructionsScope();
@@ -84,7 +89,7 @@ class DefineCommand extends Command
         $output->writeln("<info>{$concept}</info> is well-defined");
 
         //var_dump($this->parser->getGraph());
-        var_dump($this->parser->getStructure());
+        //var_dump($this->parser->getStructure());
 
         return 0;
     }
